@@ -17,7 +17,7 @@ public class Theater implements TheaterATD{
         //System.out.print(DataSeat);
     }
     public void setTheater(){
-        for(int i = 0; i < this.row*this.column; i++){
+        for(int i = 1; i <= this.row*this.column; i++){
             DataSeat.put(i,null);
         }
     }
@@ -49,5 +49,9 @@ public class Theater implements TheaterATD{
     public void reserve(int numSeat,int price) {
         Seat rs = new Seat(numSeat,price);
         DataSeat.replace(numSeat,rs);
+    }
+
+    public void cancelReservation(int numSeat){
+        DataSeat.replace(numSeat,null);
     }
 }
