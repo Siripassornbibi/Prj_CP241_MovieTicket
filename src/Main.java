@@ -1,3 +1,4 @@
+import GUI.MainFrame;
 import Theater.Theater;
 
 import java.util.HashMap;
@@ -7,7 +8,6 @@ public class Main {
     Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         Main a = new Main();
-
         Theater firstTheater = new Theater(5, 10);
 
         System.out.println("\nROW: " + firstTheater.getRow() + "   COLUMN: " + firstTheater.getColumn());
