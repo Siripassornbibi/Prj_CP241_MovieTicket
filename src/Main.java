@@ -1,3 +1,4 @@
+import DataStructure.DoubleHashingHashMap;
 import GUI.MainFrame;
 import Theater.Theater;
 
@@ -57,7 +58,7 @@ public class Main {
     }
 
     void showCurrentTheater(Theater theater){
-        HashMap data = theater.getDataTheater();
+        DoubleHashingHashMap data = theater.getDataTheater();
         for (int i = 1; i <= theater.getRow() * theater.getColumn(); i++) {
             if (i % 10 == 1 && i != 1) {
                 System.out.print('\n');

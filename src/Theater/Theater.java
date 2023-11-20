@@ -1,18 +1,18 @@
 package Theater;
 
+import DataStructure.DoubleHashingHashMap;
 import Seat.Seat;
-import Ticket.Ticket;
 
 import java.util.HashMap;
 
-public class Theater implements TheaterATD{
+public class Theater implements TheaterADT{
     private int row,column;
-    private HashMap<Integer, Seat> DataSeat;
+    private DoubleHashingHashMap<Integer, Seat> DataSeat;
 
     public Theater(int row, int column){
         setRow(row);
         setColumn(column);
-        DataSeat = new HashMap<>(row*column);
+        DataSeat = new DoubleHashingHashMap<>();
         setTheater();
         //System.out.print(DataSeat);
     }
@@ -41,7 +41,7 @@ public class Theater implements TheaterATD{
     }
 
     @Override
-    public HashMap getDataTheater() {
+    public DoubleHashingHashMap getDataTheater() {
         return DataSeat;
     }
 
