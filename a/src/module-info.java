@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author siripassornsiwanno
- *
- */
-module a {
-}
