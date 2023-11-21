@@ -3,43 +3,45 @@ package Seat;
 public class Seat{
     private int seatNumber;
     private double price;
-    private boolean reserved;
+    private String type;
 
-    public Seat(int seatNumber, double price) {
-        this.seatNumber = seatNumber;
-        this.price = price;
-        this.reserved = false;
+    private Boolean reserveStatus = false;
+
+    public Seat(int seatNumber) {
+       setSeatNumber(seatNumber);
     }
 
+    //accessor
     public int getSeatNumber() {
         return seatNumber;
     }
 
-    public double getPrice() {
+    public double getPrice(){
         return price;
     }
 
-    public boolean isReserved() {
-        return reserved;
+    public String getType(){
+        return type;
     }
 
-    public void reserve() {
-        if (!reserved) {
-            reserved = true;
-            System.out.println("Seat " + seatNumber + " has been reserved.");
-        } else {
-            System.out.println("Seat " + seatNumber + " is already reserved.");
-        }
+    public Boolean getStatus(){
+        return reserveStatus;
     }
 
-    public void cancelReservation() {
-        if (reserved) {
-            reserved = false;
-            System.out.println("Reservation for seat " + seatNumber + " has been canceled.");
-        } else {
-            System.out.println("Seat " + seatNumber + " is not reserved.");
-        }
+    //mutator
+    public void setSeatNumber(int num){
+        this.seatNumber = num;
     }
 
+    public void setPrice(double price){
+        this.price = price;
+    }
 
+    public void setType(String type){
+        this.type = type;
+    }
+
+    public void setReserveStatus(Boolean reserveStatus){
+        this.reserveStatus = reserveStatus;
+    }
 }

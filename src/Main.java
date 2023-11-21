@@ -1,15 +1,15 @@
 import DataStructure.DoubleHashingHashMap;
 import GUI.MainFrame;
+import Seat.*;
 import Theater.Theater;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
     Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         Main a = new Main();
-        Theater firstTheater = new Theater(5, 10);
+        Theater firstTheater = new Theater();
 
         System.out.println("\nROW: " + firstTheater.getRow() + "   COLUMN: " + firstTheater.getColumn());
         System.out.println("\n"+firstTheater.getDataTheater());
@@ -39,7 +39,7 @@ public class Main {
                 row = scanner.nextInt();
                 System.out.println("column");
                 column = scanner.nextInt();
-                theater.reserve(((row - 1) * theater.getColumn()) + column, 200);
+                theater.reserve(((row - 1) * theater.getColumn()) + column);
                 
                 showCurrentTheater(theater);
                 
@@ -60,15 +60,16 @@ public class Main {
     void showCurrentTheater(Theater theater){
         DoubleHashingHashMap data = theater.getDataTheater();
         for (int i = 1; i <= theater.getRow() * theater.getColumn(); i++) {
+            Seat s = (Seat) data.get(i);
             if (i % 10 == 1 && i != 1) {
                 System.out.print('\n');
-                if(data.get(Integer.valueOf(i))!=null){
+                if(s.getStatus()){
                     System.out.print('o');
                 }else{
                     System.out.print('x');
                 }
             }else {
-                if (data.get(Integer.valueOf(i))!=null) {
+                if (s.getStatus()) {
                     System.out.print('o');
                 } else {
                     System.out.print('x');

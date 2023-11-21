@@ -1,57 +1,98 @@
 package Theater;
 
 import DataStructure.DoubleHashingHashMap;
-import Seat.Seat;
+import Seat.*;
 
-import java.util.HashMap;
-
-public class Theater implements TheaterADT{
+public class Theater{
     private int row,column;
+
     private DoubleHashingHashMap<Integer, Seat> DataSeat;
 
-    public Theater(int row, int column){
-        setRow(row);
-        setColumn(column);
+    public Theater(){
+        //Set size of the Theater
+        setRow(5);
+        setColumn(10);
+
         DataSeat = new DoubleHashingHashMap<>();
-        setTheater();
+        //type seat
+        String[] allSeatType = {"StandardSeat 12","PremiumSeat 345"};
+        setTheater(allSeatType);
         //System.out.print(DataSeat);
     }
-    public void setTheater(){
-        for(int i = 1; i <= this.row*this.column; i++){
-            DataSeat.put(i,null);
+
+    //create detail of theater here
+    public void setTheater(String allSeatType[]){
+        int start;
+        for(String seatTypeData : allSeatType){
+            //eachData[0] = type , eachData[1] = row = 12
+            String[] eachData = seatTypeData.split(" ");
+
+            //change type of row to int
+            char[] rows = eachData[1].toCharArray();
+            Integer[] row = new Integer[rows.length];
+            for (int i = 0; i < rows.length; i++) {
+                row[i] = Character.getNumericValue(rows[i]);
+            }
+
+            //สร้าง seat แต่ละแถว
+            if(eachData[0].equals("StandardSeat")){
+                for (int r : row){
+                    start = ((r - 1) * column) + 1;
+                    for (int i = start;i<=column*r;i++){
+                        DataSeat.put(i,new StandardSeat(i));
+                    }
+                }
+            } else if (eachData[0].equals("PremiumSeat")) {
+                for (int r : row){
+                    start = ((r - 1) * column) + 1;
+                    for (int i = start;i<=column*r;i++){
+                        DataSeat.put(i,new PremiumSeat(i));
+                    }
+                }
+            }
+
         }
     }
 
-    @Override
+
+
+    //mutator
     public void setRow(int row) {
         this.row = row;
     }
 
-    @Override
     public void setColumn(int column) {
         this.column = column;
     }
+
+    //accessor
     public int getColumn() {
         return column;
     }
 
-    @Override
     public int getRow() {
         return row;
     }
 
-    @Override
+    public int getTotalSeat() {
+        return row*column;
+    }
+
     public DoubleHashingHashMap getDataTheater() {
         return DataSeat;
     }
 
-    @Override
-    public void reserve(int numSeat,int price) {
-        Seat rs = new Seat(numSeat,price);
-        DataSeat.replace(numSeat,rs);
+    public Seat getCurrentDataSeat(int numSeat){
+        return DataSeat.get(numSeat);
+    }
+
+
+    //reservation
+    public void reserve(int numSeat) {
+        getCurrentDataSeat(numSeat).setReserveStatus(true);
     }
 
     public void cancelReservation(int numSeat){
-        DataSeat.replace(numSeat,null);
+        getCurrentDataSeat(numSeat).setReserveStatus(false);
     }
 }
