@@ -1,9 +1,11 @@
 package Ticket;
+import Movie.MovieInfo;
 import Seat.Seat;
 
 
 public class Ticket {
-    Seat seat;
+    Seat dataSeat;
+    MovieInfo movie;
 
 
 }

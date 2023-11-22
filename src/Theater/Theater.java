@@ -1,10 +1,12 @@
 package Theater;
 
 import DataStructure.DoubleHashingHashMap;
+import Movie.MovieInfo;
 import Seat.*;
 
 public class Theater{
     private int row,column;
+    private MovieInfo movieInfo = new MovieInfo();
 
     private DoubleHashingHashMap<Integer, Seat> DataSeat;
 
@@ -76,6 +78,10 @@ public class Theater{
 
     public int getTotalSeat() {
         return row*column;
+    }
+
+    public MovieInfo getMovieInfo(){
+        return movieInfo;
     }
 
     public DoubleHashingHashMap getDataTheater() {

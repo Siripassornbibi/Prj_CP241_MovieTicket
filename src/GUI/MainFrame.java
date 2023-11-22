@@ -64,6 +64,7 @@ public class MainFrame extends JFrame{
         Dimension preferredSize = new Dimension(650, 500); // กำหนดขนาดความกว้างและความสูง
         JPanel1.setPreferredSize(preferredSize);
         JPanelCenter.add(JPanel1);
+        JPanel1.add(new JLabel(new ImageIcon("src/picture/Poster1.png")));
 
         JPanel2 = new JPanel();
         JPanel2.setBackground(Color.orange);
