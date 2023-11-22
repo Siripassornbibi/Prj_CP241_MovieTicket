@@ -88,11 +88,13 @@ public class Theater{
 
 
     //reservation
-    public void reserve(int numSeat) {
+    public void reserve(int row,int column) {
+        int numSeat = ((row-1)*this.column)+column;
         getCurrentDataSeat(numSeat).setReserveStatus(true);
     }
 
-    public void cancelReservation(int numSeat){
+    public void cancelReservation(int row,int column){
+        int numSeat = ((row-1)*this.column)+column;
         getCurrentDataSeat(numSeat).setReserveStatus(false);
     }
 }

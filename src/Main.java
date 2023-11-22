@@ -31,6 +31,7 @@ public class Main {
                     "\n-------------------------------" +
                     "\n1.reserve" +
                     "\n2.cancel reservation" +
+                    "\n3.see information" +
                     "\nx.exit");
             input = scanner.nextLine();
 
@@ -39,7 +40,7 @@ public class Main {
                 row = scanner.nextInt();
                 System.out.println("column");
                 column = scanner.nextInt();
-                theater.reserve(((row - 1) * theater.getColumn()) + column);
+                theater.reserve(row,column);
                 
                 showCurrentTheater(theater);
                 
@@ -48,12 +49,24 @@ public class Main {
                 row = scanner.nextInt();
                 System.out.println("column");
                 column = scanner.nextInt();
-                theater.cancelReservation(((row - 1) * theater.getColumn()) + column);
+                theater.cancelReservation(row,column);
 
                 showCurrentTheater(theater);
       
+            } else if (input.equals("3")) {
+                System.out.println("Seat Information  row");
+                row = scanner.nextInt();
+                System.out.println("column");
+                column = scanner.nextInt();
+
+                Seat a = theater.getCurrentDataSeat(((row - 1) * theater.getColumn()) + column);
+                System.out.println("Information "+
+                        "\nType :" + a.getType() +
+                        "\nNo :" + a.getSeatNumber() +
+                        "\nStatus :" + a.getStatus() +
+                        "\nPrice :"+ a.getPrice());
             }
-            
+
         }
     }
 
