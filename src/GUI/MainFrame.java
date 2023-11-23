@@ -31,6 +31,7 @@ public class MainFrame extends JFrame{
         cinemaName = new JLabel("CINEMA NAME");
         cinemaName.setHorizontalAlignment(JLabel.CENTER);
         cinemaName.setVerticalAlignment(JLabel.CENTER);
+        cinemaName.setForeground(Color.PINK);
         JPanelStart.add(cinemaName);
 
         menu = new JToolBar();
@@ -48,6 +49,7 @@ public class MainFrame extends JFrame{
         cineplexLabel = new JLabel("CINEPLEX NAME");
         cineplexLabel.setHorizontalAlignment(JLabel.CENTER);
         cineplexLabel.setVerticalAlignment(JLabel.CENTER);
+        cineplexLabel.setForeground(Color.PINK);
         JPanelStart.add(cineplexLabel);
 
         getContentPane().add(JPanelStart, BorderLayout.PAGE_START);
@@ -59,18 +61,58 @@ public class MainFrame extends JFrame{
         getContentPane().add(JPanelCenter, BorderLayout.CENTER);
         JPanelCenter.setLayout(new FlowLayout());
 
+
         JPanel1 = new JPanel();
         JPanel1.setBackground(Color.white);
-        Dimension preferredSize = new Dimension(650, 500); // กำหนดขนาดความกว้างและความสูง
+        Dimension preferredSize = new Dimension(750, 600); // กำหนดขนาดความกว้างและความสูง
         JPanel1.setPreferredSize(preferredSize);
         JPanelCenter.add(JPanel1);
-        JPanel1.add(new JLabel(new ImageIcon("src/picture/Poster1.png")));
 
-        JPanel2 = new JPanel();
-        JPanel2.setBackground(Color.orange);
-        Dimension preferredSize2 = new Dimension(250, 500); // กำหนดขนาดความกว้างและความสูง
+        //เพิ่มเก้าอี้ตัวที่1
+        ImageIcon imageIcon1 = new ImageIcon("src/picture/PinkChair.png");
+        JLabel imageLabel1 = new JLabel(imageIcon1);
+        JPanel1.add(imageLabel1);
+
+        //เพิ่มเก้าอี้ตัวที่2
+        ImageIcon imageIcon2 = new ImageIcon("src/picture/AnotherImage.png");
+        JLabel imageLabel2 = new JLabel(imageIcon2);
+        JPanel1.add(imageLabel2);
+
+
+
+        JPanel JPanel2 = new JPanel();
+        JPanel2.setBackground(Color.GRAY);
+        Dimension preferredSize2 = new Dimension(350, 500); // กำหนดขนาดความกว้างและความสูง
         JPanel2.setPreferredSize(preferredSize2);
+
+        ImageIcon originalIcon = new ImageIcon("src/picture/Poster1.png"); // เปลี่ยนเป็นตำแหน่งและชื่อไฟล์ของรูปเล็กที่คุณต้องการใช้
+        Image originalImage = originalIcon.getImage();
+        int scaledWidth = 150; // กำหนดความกว้างที่ต้องการ
+        int scaledHeight = 200; // กำหนดความสูงที่ต้องการ
+        Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel smallImageLabel = new JLabel(scaledIcon);
+        JPanel2.add(smallImageLabel);
+
+        // สร้าง JLabel สำหรับข้อความ
+        JLabel textLabel = new JLabel("BorBor And The Gang");
+        textLabel.setVerticalAlignment(JLabel.TOP);
+        textLabel.setHorizontalAlignment(JLabel.LEFT);
+        JPanel2.add(textLabel);
+
+        // สร้าง ImageIcon สำหรับรูปภาพลำโพง
+        ImageIcon additionalIcon = new ImageIcon("src/picture/speaker.png");
+        Image additionalImage = additionalIcon.getImage();
+        //ปรับขนาดรูป
+        int additionalWidth = 20;
+        int additionalHeight = 20;
+        Image scaledAdditionalImage = additionalImage.getScaledInstance(additionalWidth, additionalHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledAdditionalIcon = new ImageIcon(scaledAdditionalImage);
+        JLabel additionalImageLabel = new JLabel(scaledAdditionalIcon);
+        JPanel2.add(additionalImageLabel);
+        JPanel2.setLayout(new FlowLayout(FlowLayout.LEFT));
         JPanelCenter.add(JPanel2);
+
 
         JPanelCenter.setLayout(new FlowLayout(FlowLayout.CENTER));
 
