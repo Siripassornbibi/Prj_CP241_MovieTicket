@@ -1,6 +1,5 @@
 import DataStructure.DoubleHashingHashMap;
-import GUI.MainFrame;
-import Movie.MovieInfo;
+import Movie.*;
 import Seat.*;
 import Theater.Theater;
 
@@ -14,7 +13,7 @@ public class Main {
 
         System.out.println("\nROW: " + firstTheater.getRow() + "   COLUMN: " + firstTheater.getColumn());
         //System.out.println("\n"+firstTheater.getDataTheater());
-        MovieInfo movieInfo =firstTheater.getMovieInfo();
+        Movie1 movieInfo = (Movie1) firstTheater.getMovieInfo();
         System.out.println("Name : "+movieInfo.getMovieName()+" \nLanguage : "+movieInfo.getLanguage()+" \nType : "+movieInfo.getTypeMovie());
 
         //แสดงผล

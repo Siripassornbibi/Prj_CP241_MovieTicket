@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class MainFrame extends JFrame{
+public class ReservationMainFrame extends JFrame{
     private JPanel basePanel;
     private JButton button1,button2,button3;
     private JPanel JPanelStart;
@@ -63,24 +63,30 @@ public class MainFrame extends JFrame{
         JPanelCenter.setLayout(new FlowLayout());
 
 
-        JPanel1 = new JPanel();
+        JPanel1 = new JPanel();//ส่วนตรงกลางซ้าย
         JPanel1.setBackground(Color.white);
         Dimension preferredSize = new Dimension(750, 600); // กำหนดขนาดความกว้างและความสูง
         JPanel1.setPreferredSize(preferredSize);
         JPanelCenter.add(JPanel1);
 
-        JPanel2 = new JPanel();
-        JPanel2.setBackground(Color.GRAY);
+        JPanel2 = new JPanel();//ส่วนด้านขวา
+        JPanel2.setBackground(new Color((0xFFC9D1)));
+        JPanel2.setBorder(new RoundBorder(30)); // ขอบมน
         Dimension preferredSize2 = new Dimension(420, 600); // กำหนดขนาดความกว้างและความสูง
         JPanel2.setPreferredSize(preferredSize2);
 
-        //ส่วนด้านขวา JPanel 2
+        //ส่วนด้านขวา JPanel
+
+        //ส่วนด้านบนขวา
         JPanel jTop_JP2 = new JPanel(); //ขวาส่วนบน
+        jTop_JP2.setBorder(new EmptyBorder(10,0,0,0));
         jTop_JP2.setLayout(new GridLayout(1,2));
+        jTop_JP2.setOpaque(false);
 
         JPanel right_jTop_JP2 = new JPanel();
+        right_jTop_JP2.setOpaque(false);
         right_jTop_JP2.setLayout(new GridLayout(4,1));
-        right_jTop_JP2.setBorder(new EmptyBorder(10,10,10,10));
+        right_jTop_JP2.setBorder(new EmptyBorder(30,10,10,10));
 
         ImageIcon originalIcon = new ImageIcon("src/picture/Poster1.png"); // เปลี่ยนเป็นตำแหน่งและชื่อไฟล์ของรูปเล็กที่คุณต้องการใช้
         Image originalImage = originalIcon.getImage();
@@ -102,6 +108,7 @@ public class MainFrame extends JFrame{
         right_jTop_JP2.add(textLabel);
 
         JPanel A1 = new JPanel();
+        A1.setOpaque(false);
         // สร้าง ImageIcon สำหรับรูปภาพลำโพง
         ImageIcon additionalIcon = new ImageIcon("src/picture/speaker.png");
         Image additionalImage = additionalIcon.getImage();
@@ -123,6 +130,7 @@ public class MainFrame extends JFrame{
         right_jTop_JP2.add(A1);
 
         JPanel A2 = new JPanel();
+        A2.setOpaque(false);
         // สร้าง ImageIcon สำหรับรูปภาพนาริกา
         ImageIcon newIcon = new ImageIcon("src/picture/Clock.png");
         Image newImage = newIcon.getImage();
@@ -159,9 +167,9 @@ public class MainFrame extends JFrame{
 
         //ส่วนกลางขวา
         JPanel jMiddle_JP2 = new JPanel();
-        jMiddle_JP2.setLayout(new GridLayout(5,1));
+        jMiddle_JP2.setLayout(new GridLayout(4,1));
         jMiddle_JP2.setPreferredSize(new Dimension(400, 300));
-        jMiddle_JP2.setBorder(new EmptyBorder(10,15,10,10));
+        jMiddle_JP2.setBorder(new EmptyBorder(10,30,10,20));
 
         //เพิ่ม text showtime
         JLabel textLabel3 = new JLabel("ShowTime");
@@ -205,7 +213,6 @@ public class MainFrame extends JFrame{
         B2.add(Box.createHorizontalGlue());
         B2.add(add1ImageLabel);
 
-        //B2.setLayout(new FlowLayout(FlowLayout.LEFT));
         jMiddle_JP2.add(B2);
 
         JPanel B3 = new JPanel();
@@ -247,7 +254,12 @@ public class MainFrame extends JFrame{
         JPanel2.add(jMiddle_JP2);
 
         //ส่วนขวาล่าง
+        JPanel jEnd_JP2 = new JPanel();
+        jEnd_JP2.setOpaque(false);
+        JButton reserveBtn = new JButton("RESERVE");
+        jEnd_JP2.add(reserveBtn);
 
+        JPanel2.add(jEnd_JP2);
 
         JPanelCenter.add(JPanel2);
         JPanelCenter.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -262,6 +274,6 @@ public class MainFrame extends JFrame{
     }
 
     public static void main(String args[]){
-        MainFrame mainFrame = new MainFrame();
+        ReservationMainFrame reservationMainFrame = new ReservationMainFrame();
     }
 }

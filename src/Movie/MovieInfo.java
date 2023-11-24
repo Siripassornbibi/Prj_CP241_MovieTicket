@@ -1,11 +1,32 @@
 package Movie;
 
 public class MovieInfo {
-    String movieName = "BorBor And The Gang";
-    String typeMovie = "Comedy";
-    String language = "TH/EN";
-    String totalTime = "160 minute";
-    String posterMoviePath = "src/picture/Poster1.png";
+    String movieName;
+    String typeMovie;
+    String language;
+    String totalTime;
+    String posterMoviePath;
+
+    //mutator
+    public void setMovieName(String a){
+        movieName = a;
+    }
+
+    public void setTypeMovie(String typeMovie){
+        this.typeMovie = typeMovie;
+    }
+
+    public void setLanguage(String language){
+        this.language = language;
+    }
+
+    public void setTotalTime(String totalTime){
+        this.totalTime = totalTime;
+    }
+
+    public void setPosterMoviePath(String posterMoviePath){
+        this.posterMoviePath = posterMoviePath;
+    }
 
     //accessor
     public String getMovieName(){
