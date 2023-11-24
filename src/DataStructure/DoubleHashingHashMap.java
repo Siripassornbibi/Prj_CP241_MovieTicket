@@ -1,7 +1,7 @@
 package DataStructure;
 
 public class DoubleHashingHashMap<K, V> {
-    private static final int DEFAULT_CAPACITY = 16;
+    private static final int DEFAULT_CAPACITY = 17;
     private static final double LOAD_FACTOR = 0.75;
 
     private int size;
@@ -70,6 +70,7 @@ public class DoubleHashingHashMap<K, V> {
         return null;
     }
 
+    //hash function
     private int hash1(K key) {
         return key.hashCode() % capacity;
     }
