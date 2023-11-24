@@ -187,11 +187,11 @@ public class MainFrame extends JFrame{
         jMiddle_JP2.add(B1);
 
         JPanel B2 = new JPanel();
+        B2.setLayout(new BoxLayout(B2, BoxLayout.X_AXIS));
         B2.setOpaque(false);
 
         //เพิ่ม text โรงหนัง
         JLabel textLabel6 = new JLabel("Theater7");
-        textLabel6.setAlignmentX(Component.LEFT_ALIGNMENT);
         B2.add(textLabel6);
 
         // สร้าง ImageIcon สำหรับรูปภาพเวลา
@@ -202,7 +202,7 @@ public class MainFrame extends JFrame{
         Image scaledAdd1Image = add1Image.getScaledInstance(add1Width, add1Height, Image.SCALE_SMOOTH);
         ImageIcon scaledAdd1Icon = new ImageIcon(scaledAdd1Image);
         JLabel add1ImageLabel = new JLabel(scaledAdd1Icon);
-        add1ImageLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        B2.add(Box.createHorizontalGlue());
         B2.add(add1ImageLabel);
 
         //B2.setLayout(new FlowLayout(FlowLayout.LEFT));
