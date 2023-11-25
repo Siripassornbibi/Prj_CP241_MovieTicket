@@ -7,6 +7,9 @@ public class Seat{
     private Boolean reserveStatus = false;
     private String pathPicture,clicked_pathPicture;
 
+    private String row;
+    private int colum;
+
     public Seat(int seatNumber) {
        setSeatNumber(seatNumber);
     }
@@ -15,6 +18,10 @@ public class Seat{
     public int getSeatNumber() {
         return seatNumber;
     }
+
+    public String getRow(){return row;}
+
+    public int getColum(){return colum;}
 
     public double getPrice(){
         return price;
@@ -35,6 +42,14 @@ public class Seat{
     //mutator
     public void setSeatNumber(int num){
         this.seatNumber = num;
+    }
+
+    public void setRow(String row){
+        this.row = row;
+    }
+
+    public void setColum(int colum){
+        this.colum = colum;
     }
 
     public void setPrice(double price){

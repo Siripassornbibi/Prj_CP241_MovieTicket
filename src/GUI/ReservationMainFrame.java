@@ -23,6 +23,7 @@ public class ReservationMainFrame extends JFrame{
     private JLabel cinemaName,cineplexLabel;
     private JPanel JPanel1,JPanel2;
     private JLabel textLabel10; //TotalPrice
+    private JLabel textLabel9; //Total Code Seat
     private int rowOne,columnOne;
     private ArrayList<Seat> allChooseSeat;
 
@@ -304,7 +305,7 @@ public class ReservationMainFrame extends JFrame{
         B3.add(textLabel8);
 
         //เพิ่ม text เลขที่นั่ง
-        JLabel textLabel9 = new JLabel("E6");
+        textLabel9 = new JLabel("");
         Font originalFont9 = textLabel9.getFont();
         int newSize9 = 16;
         Font newFont9 = originalFont9.deriveFont((float) newSize9);
@@ -421,12 +422,14 @@ public class ReservationMainFrame extends JFrame{
 
             allChooseSeat.remove(seat);
             getTotal(allChooseSeat);
+            getSeatCode(allChooseSeat);
 
         } else {
             button.setIcon(pickChairIcon);
 
             allChooseSeat.add(seat);
             getTotal(allChooseSeat);
+            getSeatCode(allChooseSeat);
 
         }
     }
@@ -441,6 +444,22 @@ public class ReservationMainFrame extends JFrame{
         return sum;
     }
 
+    private String getSeatCode(ArrayList<Seat> selectedArrayList_Seat){
+        String allSeatCode = new String("");
+
+        for (int i = 0; i < selectedArrayList_Seat.size(); i++) {
+            Seat s = selectedArrayList_Seat.get(i);
+            if(selectedArrayList_Seat.size() == 1 || i == selectedArrayList_Seat.size()-1){
+                allSeatCode += s.getRow() + s.getColum();
+            } else{
+                allSeatCode += s.getRow() + s.getColum()+", ";
+            }
+        }
+
+        //System.out.println(allSeatCode);
+        textLabel9.setText(allSeatCode);
+        return allSeatCode;
+    }
 
 
 

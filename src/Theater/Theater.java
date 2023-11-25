@@ -49,6 +49,8 @@ public class Theater{
     //create detail of theater here
     public void setTheater(String allSeatType[]){
         int start;
+        char lastCurrentChar = (char) ('A' + (this.getRow()-1));
+
         for(String seatTypeData : allSeatType){
             //eachData[0] = type , eachData[1] = row = 12
             String[] eachData = seatTypeData.split(" ");
@@ -64,16 +66,24 @@ public class Theater{
             if(eachData[0].equals("StandardSeat")){
                 for (int r : row){
                     start = ((r - 1) * column) + 1;
-                    for (int i = start;i<=column*r;i++){
-                        DataSeat.put(i,new StandardSeat(i));
+                    for (int i = start; i <= column * r; i++){
+                        Seat s = new StandardSeat(i);
+                        s.setColum(i-((r-1)*column));
+                        s.setRow(String.valueOf(lastCurrentChar));
+                        DataSeat.put(i,s);
                     }
+                    lastCurrentChar = (char) (lastCurrentChar-1);
                 }
             } else if (eachData[0].equals("PremiumSeat")) {
                 for (int r : row){
                     start = ((r - 1) * column) + 1;
-                    for (int i = start;i<=column*r;i++){
-                        DataSeat.put(i,new PremiumSeat(i));
+                    for (int i = start; i <= column * r; i++){
+                        Seat s = new PremiumSeat(i);
+                        s.setColum(i - ((r-1) * column) );
+                        s.setRow(String.valueOf(lastCurrentChar));
+                        DataSeat.put(i,s);
                     }
+                    lastCurrentChar = (char) (lastCurrentChar-1);
                 }
             }
 
