@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ReservationMainFrame extends JFrame{
     private JPanel basePanel;
@@ -20,7 +22,10 @@ public class ReservationMainFrame extends JFrame{
     private JToolBar menu;
     private JLabel cinemaName,cineplexLabel;
     private JPanel JPanel1,JPanel2;
-    int rowOne,columnOne;
+    private JLabel textLabel10; //TotalPrice
+    private int rowOne,columnOne;
+    private ArrayList<Seat> allChooseSeat;
+
 
     public ReservationMainFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,6 +43,7 @@ public class ReservationMainFrame extends JFrame{
 
         rowOne = testTheater.getRow();
         columnOne = testTheater.getColumn();
+        allChooseSeat = new ArrayList<>();
 
         // TODO: place custom component creation code here
         setTitle("Movie Reservation");
@@ -309,7 +315,7 @@ public class ReservationMainFrame extends JFrame{
 
 
         //เพิ่ม text ราคารวม
-        JLabel textLabel10 = new JLabel("160 BATH");
+        textLabel10 = new JLabel("0 BATH");
         textLabel10.setVerticalAlignment(JLabel.TOP);
         textLabel10.setHorizontalAlignment(JLabel.LEFT);
         B3.add(textLabel10);
@@ -323,6 +329,7 @@ public class ReservationMainFrame extends JFrame{
         JPanel jEnd_JP2 = new JPanel();
         jEnd_JP2.setOpaque(false);
         JButton reserveBtn = new JButton("RESERVE");
+        reserveBtn.setPreferredSize(new Dimension(360,45));
         jEnd_JP2.add(reserveBtn);
 
         JPanel2.add(jEnd_JP2);
@@ -399,7 +406,7 @@ public class ReservationMainFrame extends JFrame{
         return btnSeat;
     }
 
-    private static void toggleImage(JButton button,Seat seat) {
+    private void toggleImage(JButton button,Seat seat) {
         ImageIcon pickChairIcon = new ImageIcon(seat.getClicked_pathPicture());
         Image pickChairImage = pickChairIcon.getImage();
 
@@ -411,9 +418,33 @@ public class ReservationMainFrame extends JFrame{
 
         if (currentImage.equals(pickChairImage)) {
             button.setIcon(reservedSeatIcon);
+
+            allChooseSeat.remove(seat);
+            getTotal(allChooseSeat);
+
         } else {
             button.setIcon(pickChairIcon);
+
+            allChooseSeat.add(seat);
+            getTotal(allChooseSeat);
+
         }
     }
+
+    private double getTotal(ArrayList<Seat> selectedArrayList_Seat){
+        double sum = 0;
+        for (Seat s:selectedArrayList_Seat){
+            sum += s.getPrice();
+        }
+        //System.out.println(sum);
+        textLabel10.setText(sum + "  BATH"); // แสดงผลราคารวมทั้งหมด
+        return sum;
+    }
+
+
+
+
+
+
 
 }
