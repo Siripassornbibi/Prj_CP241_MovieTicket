@@ -10,13 +10,16 @@ public class Theater1 extends Theater{
         if (movieInfo != null) {
             this.setMovieInfo(movieInfo);
 
+            //Set Theater name
+            setTheater_Name("Theatre1");
+
             //Set size of the Theater
-            setRow(6);
-            setColumn(13);
+            setRow(5);
+            setColumn(10);
 
             DataSeat = new DoubleHashingHashMap<>();
             //type seat
-            String[] allSeatType = {"StandardSeat 123","PremiumSeat 456"};
+            String[] allSeatType = {"StandardSeat 123","PremiumSeat 45"};
             setTheater(allSeatType);
             //System.out.print(DataSeat);
         } else {

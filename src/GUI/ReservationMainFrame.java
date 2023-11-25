@@ -1,9 +1,9 @@
 package GUI;
 
-import Movie.Movie1;
-import Movie.Movie2;
-import Movie.MovieInfo;
-import Theater.Theater;
+import DataStructure.DoubleHashingHashMap;
+import Movie.*;
+import Seat.Seat;
+import Theater.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +18,7 @@ public class ReservationMainFrame extends JFrame{
     private JToolBar menu;
     private JLabel cinemaName,cineplexLabel;
     private JPanel JPanel1,JPanel2;
-    int rowOne = 5;
+    int rowOne,columnOne;
 
     public ReservationMainFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,27 +29,17 @@ public class ReservationMainFrame extends JFrame{
         setVisible(true);
     }
 
-    public ReservationMainFrame(Theater theater) {
-
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);  // ตั้งตำแหน่งให้ตรงกลาง
-        getContentPane().setLayout(new BorderLayout(0, 0));
-        createUIComponents();  // ย้ายการสร้าง UI ไปยังเมทอดนี้
-        pack();  // ปรับขนาดตาม component ทั้งหมด
-        setVisible(true);
-    }
-
-
-    private void createUIComponents() {
+    public void createUIComponents() {
         //แก้ข้อมูลหนัง
-        Theater testTheater = new Theater(new Movie1());
-
+        Theater testTheater = new Theater1(new Movie1());
         MovieInfo m = (MovieInfo) testTheater.getMovieInfo();
+
+        rowOne = testTheater.getRow();
+        columnOne = testTheater.getColumn();
 
         // TODO: place custom component creation code here
         setTitle("Movie Reservation");
-        setSize(1250, 800);
+        setSize(1250, 1000);
         setVisible(true);
         setIconImage(new ImageIcon("src/picture/logo.png").getImage());
         getContentPane().setLayout(new BorderLayout(0, 0));
@@ -78,7 +68,7 @@ public class ReservationMainFrame extends JFrame{
         menu.add(button3);
         JPanelStart.add(menu);
 
-        cineplexLabel = new JLabel("CINEPLEX NAME");
+        cineplexLabel = new JLabel(testTheater.getTheaterName());
         cineplexLabel.setHorizontalAlignment(JLabel.CENTER);
         cineplexLabel.setVerticalAlignment(JLabel.CENTER);
         cineplexLabel.setForeground(Color.PINK);
@@ -101,7 +91,7 @@ public class ReservationMainFrame extends JFrame{
         JPanel1 = new JPanel();//ส่วนตรงกลางซ้าย
 //        JPanel1.setBackground(Color.white);
         JPanel1.setOpaque(false);
-        Dimension preferredSize = new Dimension(750, 650); // กำหนดขนาดความกว้างและความสูง
+        Dimension preferredSize = new Dimension(750, 750); // กำหนดขนาดความกว้างและความสูง
         JPanel1.setPreferredSize(preferredSize);
         JPanelCenter.add(JPanel1);
         JPanel1.setLayout(new GridLayout(rowOne+2, 1));
@@ -116,7 +106,7 @@ public class ReservationMainFrame extends JFrame{
 
         //แถวเก้าอี้
         char lastCurrentChar = (char) ('A' + (rowOne-1));
-        addRowWithLabel(rowOne, lastCurrentChar);
+        addRowWithLabel(rowOne,columnOne, lastCurrentChar,testTheater);
 
         JPanel seatPrice_Box = new JPanel();
 
@@ -146,7 +136,7 @@ public class ReservationMainFrame extends JFrame{
         JPanel2 = new JPanel();//ส่วนด้านขวา
         JPanel2.setBackground(new Color((0xFFC9D1)));
         JPanel2.setBorder(new RoundBorder(30)); // ขอบมน
-        Dimension preferredSize2 = new Dimension(420, 650); // กำหนดขนาดความกว้างและความสูง
+        Dimension preferredSize2 = new Dimension(420, 800); // กำหนดขนาดความกว้างและความสูง
         JPanel2.setPreferredSize(preferredSize2);
 
         //ส่วนด้านขวา JPanel
@@ -273,7 +263,7 @@ public class ReservationMainFrame extends JFrame{
         B2.setOpaque(false);
 
         //เพิ่ม text โรงหนัง
-        JLabel textLabel6 = new JLabel("Theater7");
+        JLabel textLabel6 = new JLabel(testTheater.getTheaterName());
         B2.add(textLabel6);
 
         // สร้าง ImageIcon สำหรับรูปภาพเวลา
@@ -351,7 +341,9 @@ public class ReservationMainFrame extends JFrame{
         setVisible(true);
     }
 
-    private void addRowWithLabel(int currentRow, char currentChar) {
+    public void addRowWithLabel(int currentRow,int column, char currentChar,Theater theater) {
+        //key เริ่มต้นที่ 1
+        DoubleHashingHashMap data = theater.getDataTheater();
         if (currentRow > 0) {
             JPanel one = new JPanel();
             one.setOpaque(false);
@@ -359,21 +351,34 @@ public class ReservationMainFrame extends JFrame{
             JLabel rowAlphabet = new JLabel(Character.toString(currentChar));
             one.add(rowAlphabet);
 
-            for (int j = 0; j < 10; j++) {
-                ImageIcon imageIcon = new ImageIcon("src/picture/PickChair.png");
-                Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
-                imageIcon = new ImageIcon(image);
+            for (int j = 1; j <= column; j++) {
+                //one.add(addSeat("src/picture/ReservedPinkSeat.png"));
+                Seat s = (Seat) data.get((Math.abs( currentRow - theater.getRow() ) * column ) + j);
+                System.out.println(s.getSeatNumber());
 
-                JButton button = new JButton(imageIcon);
-                button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-                one.add(button);
+                if (s.getStatus()) {
+                    one.add(addSeat("src/picture/ReservedPinkSeat.png"));
+                } else {
+                    one.add(addSeat(s.getPathPicture()));
+                }
+
             }
 
 
             JPanel1.add(one);
 
             // เรียกตัวเองเพื่อทำแถวถัดไป
-            addRowWithLabel(currentRow - 1, (char)(currentChar - 1));
+            addRowWithLabel(currentRow - 1,column, (char)(currentChar - 1),theater);
         }
     }
+
+    private JButton addSeat(String pathSeatButton){
+        ImageIcon imageIcon = new ImageIcon(pathSeatButton);
+        Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(image);
+        JButton btnSeat = new JButton(imageIcon);
+        btnSeat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        return btnSeat;
+    }
+
 }

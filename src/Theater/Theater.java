@@ -13,8 +13,6 @@ public class Theater{
     DoubleHashingHashMap<Integer, Seat> DataSeat;
 
     public Theater(){
-        //Set Theater name
-        setTheater_Name("Theatre One");
         //Set size of the Theater
         setRow(5);
         setColumn(10);
@@ -28,6 +26,9 @@ public class Theater{
 
     public Theater(Object movieInfo) {
         if (movieInfo != null) {
+            //Set Theater name
+            setTheater_Name("Theatre XX");
+
             this.movieInfo = movieInfo;
 
             //Set size of the Theater

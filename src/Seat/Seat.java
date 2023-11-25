@@ -4,8 +4,8 @@ public class Seat{
     private int seatNumber;
     private double price;
     private String type;
-
     private Boolean reserveStatus = false;
+    private String pathPicture;
 
     public Seat(int seatNumber) {
        setSeatNumber(seatNumber);
@@ -28,6 +28,8 @@ public class Seat{
         return reserveStatus;
     }
 
+    public String getPathPicture(){return pathPicture;}
+
     //mutator
     public void setSeatNumber(int num){
         this.seatNumber = num;
@@ -44,4 +46,6 @@ public class Seat{
     public void setReserveStatus(Boolean reserveStatus){
         this.reserveStatus = reserveStatus;
     }
+
+    public void setPathPicture(String pathPicture){this.pathPicture = pathPicture;}
 }
