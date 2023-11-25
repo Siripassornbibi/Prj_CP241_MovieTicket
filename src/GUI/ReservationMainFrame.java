@@ -26,7 +26,7 @@ public class ReservationMainFrame extends JFrame{
     private void createUIComponents() {
         // TODO: place custom component creation code here
         setTitle("Movie Reservation");
-        setSize(1250, 750);
+        setSize(1250, 800);
         setVisible(true);
         setIconImage(new ImageIcon("src/picture/logo.png").getImage());
         getContentPane().setLayout(new BorderLayout(0, 0));
@@ -37,7 +37,7 @@ public class ReservationMainFrame extends JFrame{
         JPanelStart.setBackground(new Color(0x3C3F41));
         JPanelStart.setLayout(new GridLayout(3, 1));
 
-        cinemaName = new JLabel("CINEMA NAME");
+        cinemaName = new JLabel("Srinakharinwirot Cinema");
         cinemaName.setHorizontalAlignment(JLabel.CENTER);
         cinemaName.setVerticalAlignment(JLabel.CENTER);
         cinemaName.setForeground(Color.PINK);
@@ -64,22 +64,28 @@ public class ReservationMainFrame extends JFrame{
         getContentPane().add(JPanelStart, BorderLayout.PAGE_START);
 
 
+
+
         //JPanelCenter
         JPanelCenter = new JPanel();
         JPanelCenter.setBackground(new Color(0xFCFBE7));
         getContentPane().add(JPanelCenter, BorderLayout.CENTER);
         JPanelCenter.setLayout(new FlowLayout());
 
+
+
         //JPanel 1
         JPanel1 = new JPanel();//ส่วนตรงกลางซ้าย
 //        JPanel1.setBackground(Color.white);
         JPanel1.setOpaque(false);
-        Dimension preferredSize = new Dimension(750, 600); // กำหนดขนาดความกว้างและความสูง
+        Dimension preferredSize = new Dimension(750, 650); // กำหนดขนาดความกว้างและความสูง
         JPanel1.setPreferredSize(preferredSize);
         JPanelCenter.add(JPanel1);
 
-        int rowOne = 6;
-        JPanel1.setLayout(new GridLayout(rowOne, 1));
+        int rowOne = 5;
+        char lastCurrentChar = (char) ('A' + (rowOne-1));
+
+        JPanel1.setLayout(new GridLayout(rowOne+2, 1));
 
         //หน้าจอโรงหนัง
         ImageIcon screen = new ImageIcon("src/picture/screen.PNG");
@@ -89,26 +95,38 @@ public class ReservationMainFrame extends JFrame{
         JLabel newImageLabelscreen = new JLabel(scaledIconscreen);
         JPanel1.add(newImageLabelscreen);
 
-        for (int i = 0; i < rowOne - 1; i++) {
-            JPanel one = new JPanel();
-            one.setOpaque(false);
-            for (int j = 0; j < 10; j++) {
-                ImageIcon imageIcon = new ImageIcon("src/picture/PickChair.png");
-                Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
-                imageIcon = new ImageIcon(image);
+        //แถวเก้าอี้
+        addRowWithLabel(rowOne, lastCurrentChar);
 
-                JButton button = new JButton(imageIcon);
-                button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // กำหนดระยะห่างของปุ่ม
-                one.add(button);
-            }
-            JPanel1.add(one);
-        }
+        JPanel seatPrice_Box = new JPanel();
+
+        //กล่องราคาเก้าอี้ชมพู
+        ImageIcon standardPrice = new ImageIcon("src/picture/StandardPrice.PNG");
+        Image originalImage_standardPrice  = standardPrice.getImage();
+        Image scaledImage_standardPrice  = originalImage_standardPrice.getScaledInstance(85, 85, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon_standardPrice  = new ImageIcon(scaledImage_standardPrice );
+        JLabel newImageLabel_standardPrice  = new JLabel(scaledIcon_standardPrice );
+        seatPrice_Box.add(newImageLabel_standardPrice);
+
+        //กล่องราคาเก้าอี้ม่วง
+        ImageIcon PremiumPrice = new ImageIcon("src/picture/PremiumPrice.PNG");
+        Image originalImage_PremiumPrice  = PremiumPrice.getImage();
+        Image scaledImage_PremiumPrice = originalImage_PremiumPrice.getScaledInstance(85, 85, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon_PremiumPrice  = new ImageIcon(scaledImage_PremiumPrice);
+        JLabel newImageLabel_PremiumPrice  = new JLabel(scaledIcon_PremiumPrice);
+        seatPrice_Box.add(newImageLabel_PremiumPrice);
+
+        JPanel1.add(seatPrice_Box);
+
+
+
+
 
 
         JPanel2 = new JPanel();//ส่วนด้านขวา
         JPanel2.setBackground(new Color((0xFFC9D1)));
         JPanel2.setBorder(new RoundBorder(30)); // ขอบมน
-        Dimension preferredSize2 = new Dimension(420, 600); // กำหนดขนาดความกว้างและความสูง
+        Dimension preferredSize2 = new Dimension(420, 650); // กำหนดขนาดความกว้างและความสูง
         JPanel2.setPreferredSize(preferredSize2);
 
         //ส่วนด้านขวา JPanel
@@ -311,5 +329,31 @@ public class ReservationMainFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);  // ตั้งตำแหน่งให้ตรงกลาง
         setVisible(true);
+    }
+
+    private void addRowWithLabel(int currentRow, char currentChar) {
+        if (currentRow > 0) {
+            JPanel one = new JPanel();
+            one.setOpaque(false);
+
+            JLabel rowAlphabet = new JLabel(Character.toString(currentChar));
+            one.add(rowAlphabet);
+
+            for (int j = 0; j < 10; j++) {
+                ImageIcon imageIcon = new ImageIcon("src/picture/PickChair.png");
+                Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+                imageIcon = new ImageIcon(image);
+
+                JButton button = new JButton(imageIcon);
+                button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+                one.add(button);
+            }
+
+
+            JPanel1.add(one);
+
+            // เรียกตัวเองเพื่อทำแถวถัดไป
+            addRowWithLabel(currentRow - 1, (char)(currentChar - 1));
+        }
     }
 }
