@@ -398,7 +398,7 @@ public class ReservationMainFrame extends JFrame{
 
                         reserveBtn.setText("SELECT SEAT");
 
-                        countReservedClick = 0;
+                        countReservedClick--;
                     }
                 }
             }
@@ -509,7 +509,7 @@ public class ReservationMainFrame extends JFrame{
             getTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
 
-        }else if (currentImage.equals(reservedSeatImage) && countReservedClick == 0) {
+        } else if (currentImage.equals(reservedSeatImage) && countReservedClick == 0) {
             //รีเซ็ตใหม่ + เก้าอี้ที่จะลบ ลบได้ทีละตัว
 
             //ใช้รีเซ็ตพวกเก้าอี้ยังไม่จองที่เลือก
@@ -541,7 +541,14 @@ public class ReservationMainFrame extends JFrame{
 
             getTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
+
+            countReservedClick++;
         } else {
+            if (countReservedClick > 0){
+                seatButtonMap.clear();
+                allChooseSeat.clear();
+                countReservedClick = 0;
+            }
             button.setIcon(ChairIcon);
 
             allChooseSeat.add(seat);
