@@ -11,7 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class ReservationMainFrame extends JFrame{
     private JPanel basePanel;
@@ -25,7 +27,10 @@ public class ReservationMainFrame extends JFrame{
     private JLabel textLabel10; //TotalPrice
     private JLabel textLabel9; //Total Code Seat
     private int rowOne,columnOne;
+    JButton reserveBtn;
     private ArrayList<Seat> allChooseSeat;
+    private Map<Seat, JButton> seatButtonMap,seatJButtonMapReserved;
+    private int countReservedClick;
 
 
     public ReservationMainFrame() {
@@ -44,7 +49,15 @@ public class ReservationMainFrame extends JFrame{
 
         rowOne = testTheater.getRow();
         columnOne = testTheater.getColumn();
+
+        //ข้อมูลเก้าอี้ที่กดคลิกไว้
         allChooseSeat = new ArrayList<>();
+        //key -> seat, value -> button
+        seatButtonMap = new HashMap<>();
+        seatJButtonMapReserved = new HashMap<>();
+
+        //เลือกลบได้ทีละ 1 ตัว
+        countReservedClick = 0;
 
         // TODO: place custom component creation code here
         setTitle("Movie Reservation");
@@ -139,8 +152,6 @@ public class ReservationMainFrame extends JFrame{
         seatPrice_Box.add(newImageLabel_PremiumPrice);
 
         JPanel1.add(seatPrice_Box);
-
-
 
 
 
@@ -337,8 +348,64 @@ public class ReservationMainFrame extends JFrame{
         //ส่วนขวาล่าง
         JPanel jEnd_JP2 = new JPanel();
         jEnd_JP2.setOpaque(false);
-        JButton reserveBtn = new JButton("RESERVE");
+
+        //ปุ่มกดจองยกเลิก
+        reserveBtn = new JButton("SELECT SEAT");
         reserveBtn.setPreferredSize(new Dimension(360,45));
+
+        //ActionListener ของ ปุ่มกดจองยกเลิก
+        ActionListener btnReserveListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (reserveBtn.getText().equals("RESERVE")) {
+                    //reserveBtn.setText("CANCEL");
+
+                    for (Map.Entry<Seat , JButton> entry : seatButtonMap.entrySet()) {
+                        Seat key = entry.getKey();
+                        JButton value = entry.getValue();
+
+                        key.setReserveStatus(true);
+
+                        seatJButtonMapReserved.put(key,value);
+
+                        ImageIcon reservedSeatIcon = new ImageIcon(key.getReserved_pathPicture());
+                        value.setIcon(reservedSeatIcon);
+                    }
+                    seatButtonMap.clear();
+                    allChooseSeat.clear();
+
+                    getTotal(seatButtonMap);
+                    getSeatCode(allChooseSeat);
+
+                    reserveBtn.setText("SELECT SEAT");
+
+                } else if (reserveBtn.getText().equals("CANCEL")) {
+                    for (Map.Entry<Seat , JButton> entry : seatButtonMap.entrySet()) {
+                        Seat key = entry.getKey();
+                        JButton value = entry.getValue();
+
+                        key.setReserveStatus(false);
+
+                        seatJButtonMapReserved.remove(key);
+                        seatButtonMap.clear();
+                        allChooseSeat.clear();
+
+                        getTotal(seatButtonMap);
+                        getSeatCode(allChooseSeat);
+
+                        ImageIcon SeatIcon = new ImageIcon(key.getPathPicture());
+                        value.setIcon(SeatIcon);
+
+                        reserveBtn.setText("SELECT SEAT");
+
+                        countReservedClick = 0;
+                    }
+                }
+            }
+        };
+
+        reserveBtn.addActionListener(btnReserveListener);
+
         jEnd_JP2.add(reserveBtn);
 
         JPanel2.add(jEnd_JP2);
@@ -375,7 +442,7 @@ public class ReservationMainFrame extends JFrame{
                 //System.out.println(s.getSeatNumber());
 
                 if (s.getStatus()) {
-                    ImageIcon imageIcon = new ImageIcon(s.getClicked_pathPicture());
+                    ImageIcon imageIcon = new ImageIcon(s.getReserved_pathPicture());
                     Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
                     imageIcon = new ImageIcon(image);
                     JButton btnSeat = new JButton(imageIcon);
@@ -417,35 +484,84 @@ public class ReservationMainFrame extends JFrame{
     }
 
     private void toggleImage(JButton button,Seat seat) {
-        ImageIcon pickChairIcon = new ImageIcon(seat.getClicked_pathPicture());
-        Image pickChairImage = pickChairIcon.getImage();
+        //ภาพเก้าอี้ถูกคลิก
+        ImageIcon ChairIcon = new ImageIcon(seat.getClicked_pathPicture());
+        Image ChairImage = ChairIcon.getImage();
 
-        ImageIcon reservedSeatIcon = new ImageIcon(seat.getPathPicture());
+        //ภาพรูปภาพปกติ
+        ImageIcon SeatIcon = new ImageIcon(seat.getPathPicture());
+        Image SeatImage = SeatIcon.getImage();
+
+        //ภาพถูกจอง
+        ImageIcon reservedSeatIcon = new ImageIcon(seat.getReserved_pathPicture());
         Image reservedSeatImage = reservedSeatIcon.getImage();
 
         ImageIcon currentIcon = (ImageIcon) button.getIcon();
         Image currentImage = currentIcon.getImage();
 
-        if (currentImage.equals(pickChairImage)) {
-            button.setIcon(reservedSeatIcon);
+
+        if (currentImage.equals(ChairImage)) {
+            button.setIcon(SeatIcon);
 
             allChooseSeat.remove(seat);
-            getTotal(allChooseSeat);
+            seatButtonMap.remove(seat);
+
+            getTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
 
-        } else {
-            button.setIcon(pickChairIcon);
+        }else if (currentImage.equals(reservedSeatImage) && countReservedClick == 0) {
+            //รีเซ็ตใหม่ + เก้าอี้ที่จะลบ ลบได้ทีละตัว
+
+            //ใช้รีเซ็ตพวกเก้าอี้ยังไม่จองที่เลือก
+            for (JButton btn : seatButtonMap.values()){
+                btn.setIcon(SeatIcon);
+            }
+
+            seatButtonMap.clear();
+            allChooseSeat.clear();
+
+            reserveBtn.setText("CANCEL");
 
             allChooseSeat.add(seat);
-            getTotal(allChooseSeat);
+            seatButtonMap.put(seat,button);
+
+            getTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
 
+            countReservedClick++;
+
+        } else if (currentImage.equals(reservedSeatImage) && countReservedClick > 0) {
+            seatButtonMap.clear();
+            allChooseSeat.clear();
+
+            reserveBtn.setText("CANCEL");
+
+            allChooseSeat.add(seat);
+            seatButtonMap.put(seat,button);
+
+            getTotal(seatButtonMap);
+            getSeatCode(allChooseSeat);
+        } else {
+            button.setIcon(ChairIcon);
+
+            allChooseSeat.add(seat);
+            seatButtonMap.put(seat,button);
+
+            getTotal(seatButtonMap);
+            getSeatCode(allChooseSeat);
+
+            reserveBtn.setText("RESERVE");
+
+        }
+
+        if(allChooseSeat.isEmpty() && seatJButtonMapReserved.isEmpty()){
+            reserveBtn.setText("SELECT SEAT");
         }
     }
 
-    private double getTotal(ArrayList<Seat> selectedArrayList_Seat){
+    private double getTotal(Map<Seat, JButton> inputHashMap){
         double sum = 0;
-        for (Seat s:selectedArrayList_Seat){
+        for (Seat s : seatButtonMap.keySet()){
             sum += s.getPrice();
         }
         //System.out.println(sum);
@@ -469,6 +585,8 @@ public class ReservationMainFrame extends JFrame{
         textLabel9.setText(allSeatCode);
         return allSeatCode;
     }
+
+
 
 
 

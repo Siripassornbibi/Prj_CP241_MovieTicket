@@ -5,7 +5,7 @@ public class Movie2 extends MovieInfo{
         Movie2 m =new Movie2();
     }
     public Movie2(){
-        setMovieName("Tom & Jerry");
+        setMovieName("Simpsons");
         setLanguage("TH/EN");
         setTypeMovie("Cartoon");
         setPosterMoviePath("src/picture/Poster2.jpg");
