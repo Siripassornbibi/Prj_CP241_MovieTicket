@@ -1,5 +1,10 @@
 package GUI;
 
+import Movie.Movie1;
+import Movie.Movie2;
+import Movie.MovieInfo;
+import Theater.Theater;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -13,17 +18,35 @@ public class ReservationMainFrame extends JFrame{
     private JToolBar menu;
     private JLabel cinemaName,cineplexLabel;
     private JPanel JPanel1,JPanel2;
+    int rowOne = 5;
 
     public ReservationMainFrame() {
-        createUIComponents();  // ย้ายการสร้าง UI ไปยังเมทอดนี้
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);  // ตั้งตำแหน่งให้ตรงกลาง
+        getContentPane().setLayout(new BorderLayout(0, 0));
+        createUIComponents();  // ย้ายการสร้าง UI ไปยังเมทอดนี้
+        pack();  // ปรับขนาดตาม component ทั้งหมด
+        setVisible(true);
+    }
+
+    public ReservationMainFrame(Theater theater) {
+
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);  // ตั้งตำแหน่งให้ตรงกลาง
+        getContentPane().setLayout(new BorderLayout(0, 0));
+        createUIComponents();  // ย้ายการสร้าง UI ไปยังเมทอดนี้
         pack();  // ปรับขนาดตาม component ทั้งหมด
         setVisible(true);
     }
 
 
     private void createUIComponents() {
+        //แก้ข้อมูลหนัง
+        Theater testTheater = new Theater(new Movie1());
+
+        MovieInfo m = (MovieInfo) testTheater.getMovieInfo();
+
         // TODO: place custom component creation code here
         setTitle("Movie Reservation");
         setSize(1250, 800);
@@ -81,10 +104,6 @@ public class ReservationMainFrame extends JFrame{
         Dimension preferredSize = new Dimension(750, 650); // กำหนดขนาดความกว้างและความสูง
         JPanel1.setPreferredSize(preferredSize);
         JPanelCenter.add(JPanel1);
-
-        int rowOne = 5;
-        char lastCurrentChar = (char) ('A' + (rowOne-1));
-
         JPanel1.setLayout(new GridLayout(rowOne+2, 1));
 
         //หน้าจอโรงหนัง
@@ -96,6 +115,7 @@ public class ReservationMainFrame extends JFrame{
         JPanel1.add(newImageLabelscreen);
 
         //แถวเก้าอี้
+        char lastCurrentChar = (char) ('A' + (rowOne-1));
         addRowWithLabel(rowOne, lastCurrentChar);
 
         JPanel seatPrice_Box = new JPanel();
@@ -142,7 +162,7 @@ public class ReservationMainFrame extends JFrame{
         right_jTop_JP2.setLayout(new GridLayout(4, 1));
         right_jTop_JP2.setBorder(new EmptyBorder(30, 10, 10, 10));
 
-        ImageIcon originalIcon = new ImageIcon("src/picture/Poster1.png"); // เปลี่ยนเป็นตำแหน่งและชื่อไฟล์ของรูปเล็กที่คุณต้องการใช้
+        ImageIcon originalIcon = new ImageIcon(m.getPosterMoviePath()); // เปลี่ยนเป็นตำแหน่งและชื่อไฟล์ของรูปเล็กที่คุณต้องการใช้
         Image originalImage = originalIcon.getImage();
         int scaledWidth = 150; // กำหนดความกว้างที่ต้องการ
         int scaledHeight = 200; // กำหนดความสูงที่ต้องการ
@@ -152,7 +172,7 @@ public class ReservationMainFrame extends JFrame{
         jTop_JP2.add(smallImageLabel);
 
         // สร้าง JLabel สำหรับข้อความ BorBorAndTheGang
-        JLabel textLabel = new JLabel("BorBor And The Gang");
+        JLabel textLabel = new JLabel(m.getMovieName());
         Font originalFont = textLabel.getFont();
         int newSize = 16;
         Font newFont = originalFont.deriveFont((float) newSize);
@@ -176,7 +196,7 @@ public class ReservationMainFrame extends JFrame{
         A1.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         //เพิ่ม text TH/EN
-        JLabel textLabel1 = new JLabel("TH/EN");
+        JLabel textLabel1 = new JLabel(m.getLanguage());
         textLabel1.setVerticalAlignment(JLabel.TOP);
         textLabel1.setHorizontalAlignment(JLabel.LEFT);
         A1.add(textLabel1);
@@ -196,7 +216,7 @@ public class ReservationMainFrame extends JFrame{
         A2.add(newImageLabel);
 
         //เพิ่ม text 120 MINS
-        JLabel textLabel2 = new JLabel("120 MINS");
+        JLabel textLabel2 = new JLabel(m.getTotalTime());
         textLabel2.setVerticalAlignment(JLabel.TOP);
         textLabel2.setHorizontalAlignment(JLabel.LEFT);
         A2.add(textLabel2);

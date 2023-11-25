@@ -1,7 +1,7 @@
 import DataStructure.DoubleHashingHashMap;
 import Movie.*;
 import Seat.*;
-import Theater.Theater;
+import Theater.*;
 
 import java.util.Scanner;
 
@@ -9,7 +9,7 @@ public class Main {
     Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         Main a = new Main();
-        Theater firstTheater = new Theater();
+        Theater firstTheater = new Theater1(new Movie1());
 
         System.out.println("\nROW: " + firstTheater.getRow() + "   COLUMN: " + firstTheater.getColumn());
         //System.out.println("\n"+firstTheater.getDataTheater());
@@ -76,7 +76,7 @@ public class Main {
         DoubleHashingHashMap data = theater.getDataTheater();
         for (int i = 1; i <= theater.getRow() * theater.getColumn(); i++) {
             Seat s = (Seat) data.get(i);
-            if (i % 10 == 1 && i != 1) {
+            if (i % theater.getColumn() == 1 && i != 1) {
                 System.out.print('\n');
                 if(s.getStatus()){
                     System.out.print('o');

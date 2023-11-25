@@ -7,11 +7,14 @@ import Seat.*;
 
 public class Theater{
     private int row,column;
-    private Object movieInfo = new Movie1();
+    private Object movieInfo;
+    private String Theater_Name;
 
-    private DoubleHashingHashMap<Integer, Seat> DataSeat;
+    DoubleHashingHashMap<Integer, Seat> DataSeat;
 
     public Theater(){
+        //Set Theater name
+        setTheater_Name("Theatre One");
         //Set size of the Theater
         setRow(5);
         setColumn(10);
@@ -21,6 +24,25 @@ public class Theater{
         String[] allSeatType = {"StandardSeat 12","PremiumSeat 345"};
         setTheater(allSeatType);
         //System.out.print(DataSeat);
+    }
+
+    public Theater(Object movieInfo) {
+        if (movieInfo != null) {
+            this.movieInfo = movieInfo;
+
+            //Set size of the Theater
+            setRow(5);
+            setColumn(10);
+
+            DataSeat = new DoubleHashingHashMap<>();
+            //type seat
+            String[] allSeatType = {"StandardSeat 12","PremiumSeat 345"};
+            setTheater(allSeatType);
+            //System.out.print(DataSeat);
+        } else {
+            // จัดการกรณีที่ movieInfo เป็น null
+            System.out.println("Error: movieInfo is null");
+        }
     }
 
     //create detail of theater here
@@ -68,7 +90,18 @@ public class Theater{
         this.column = column;
     }
 
+    public void setMovieInfo(Object movieInfo){
+        this.movieInfo = movieInfo;
+    }
+
+    public void setTheater_Name(String theaterName){
+        this.Theater_Name = theaterName;
+    }
+
     //accessor
+    public String getTheaterName(){
+        return Theater_Name;
+    }
     public int getColumn() {
         return column;
     }
@@ -92,6 +125,7 @@ public class Theater{
     public Seat getCurrentDataSeat(int numSeat){
         return DataSeat.get(numSeat);
     }
+
 
 
     //reservation
