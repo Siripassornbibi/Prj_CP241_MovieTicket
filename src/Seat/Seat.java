@@ -5,7 +5,7 @@ public class Seat{
     private double price;
     private String type;
     private Boolean reserveStatus = false;
-    private String pathPicture;
+    private String pathPicture,clicked_pathPicture;
 
     public Seat(int seatNumber) {
        setSeatNumber(seatNumber);
@@ -30,6 +30,8 @@ public class Seat{
 
     public String getPathPicture(){return pathPicture;}
 
+    public String getClicked_pathPicture(){return clicked_pathPicture;}
+
     //mutator
     public void setSeatNumber(int num){
         this.seatNumber = num;
@@ -48,4 +50,6 @@ public class Seat{
     }
 
     public void setPathPicture(String pathPicture){this.pathPicture = pathPicture;}
+
+    public void setClicked_pathPicture(String Clicked_pathPicture){this.clicked_pathPicture = Clicked_pathPicture;}
 }

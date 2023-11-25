@@ -9,6 +9,7 @@ public class StandardSeat extends Seat{
     public StandardSeat(int seatNumber) {
         super(seatNumber);
         setPathPicture("src/picture/PickChair.png");
+        setClicked_pathPicture("src/picture/ReservedPurpleSeat.png");
         setType("Standard");
         setPrice(160);
     }

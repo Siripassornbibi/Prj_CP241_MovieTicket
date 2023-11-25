@@ -8,6 +8,8 @@ import Theater.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ReservationMainFrame extends JFrame{
     private JPanel basePanel;
@@ -352,14 +354,19 @@ public class ReservationMainFrame extends JFrame{
             one.add(rowAlphabet);
 
             for (int j = 1; j <= column; j++) {
-                //one.add(addSeat("src/picture/ReservedPinkSeat.png"));
                 Seat s = (Seat) data.get((Math.abs( currentRow - theater.getRow() ) * column ) + j);
-                System.out.println(s.getSeatNumber());
+                //System.out.println(s.getSeatNumber());
 
                 if (s.getStatus()) {
-                    one.add(addSeat("src/picture/ReservedPinkSeat.png"));
+                    ImageIcon imageIcon = new ImageIcon(s.getClicked_pathPicture());
+                    Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+                    imageIcon = new ImageIcon(image);
+                    JButton btnSeat = new JButton(imageIcon);
+                    btnSeat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+                    one.add(btnSeat);
                 } else {
-                    one.add(addSeat(s.getPathPicture()));
+                    one.add(addSeat(s));
                 }
 
             }
@@ -372,13 +379,41 @@ public class ReservationMainFrame extends JFrame{
         }
     }
 
-    private JButton addSeat(String pathSeatButton){
-        ImageIcon imageIcon = new ImageIcon(pathSeatButton);
+    private JButton addSeat(Seat seat){
+        ImageIcon imageIcon = new ImageIcon(seat.getPathPicture());
         Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(image);
-        JButton btnSeat = new JButton(imageIcon);
+        JButton btnSeat = new JButton("");
+        btnSeat.setIcon(imageIcon);
         btnSeat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        ActionListener buttonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton sourceButton = (JButton) e.getSource();
+                toggleImage(sourceButton,seat);
+            }
+        };
+
+        btnSeat.addActionListener(buttonListener);
+
         return btnSeat;
+    }
+
+    private static void toggleImage(JButton button,Seat seat) {
+        ImageIcon pickChairIcon = new ImageIcon(seat.getClicked_pathPicture());
+        Image pickChairImage = pickChairIcon.getImage();
+
+        ImageIcon reservedSeatIcon = new ImageIcon(seat.getPathPicture());
+        Image reservedSeatImage = reservedSeatIcon.getImage();
+
+        ImageIcon currentIcon = (ImageIcon) button.getIcon();
+        Image currentImage = currentIcon.getImage();
+
+        if (currentImage.equals(pickChairImage)) {
+            button.setIcon(reservedSeatIcon);
+        } else {
+            button.setIcon(pickChairIcon);
+        }
     }
 
 }
