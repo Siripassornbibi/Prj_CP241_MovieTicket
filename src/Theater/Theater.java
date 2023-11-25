@@ -5,6 +5,8 @@ import Movie.Movie1;
 import Movie.MovieInfo;
 import Seat.*;
 
+import java.util.Map;
+
 public class Theater{
     private int row,column;
     private Object movieInfo;
@@ -139,7 +141,7 @@ public class Theater{
 
 
 
-    //reservation
+    //reservation จริงๆ setStatus จากเก้าแี้เลยสะดวกกว่า
     public void reserve(int row,int column) {
         int numSeat = ((row-1)*this.column)+column;
         getCurrentDataSeat(numSeat).setReserveStatus(true);
@@ -148,5 +150,15 @@ public class Theater{
     public void cancelReservation(int row,int column){
         int numSeat = ((row-1)*this.column)+column;
         getCurrentDataSeat(numSeat).setReserveStatus(false);
+    }
+
+    public void printAllStatus(){
+        for (Map.Entry<Integer, Seat> entry : DataSeat.getAllEntries()) {
+            Integer key = entry.getKey();
+            Seat value = entry.getValue();
+
+            // ในที่นี้, ใช้ getRow() และ getColumn() ตัวอย่างเพื่อแสดงผลข้อมูลของ Seat
+            System.out.print("("+"Key: " + key + ", Value: " + value.getStatus()+")"+" , ");
+        }
     }
 }

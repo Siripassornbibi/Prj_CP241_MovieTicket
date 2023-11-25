@@ -14,12 +14,12 @@ public class Theater1 extends Theater{
             setTheater_Name("Theatre1");
 
             //Set size of the Theater
-            setRow(5);
+            setRow(6);
             setColumn(11);
 
             DataSeat = new DoubleHashingHashMap<>();
             //type seat
-            String[] allSeatType = {"StandardSeat 123","PremiumSeat 45"};
+            String[] allSeatType = {"StandardSeat 1234","PremiumSeat 56"};
             setTheater(allSeatType);
             //System.out.print(DataSeat);
         } else {

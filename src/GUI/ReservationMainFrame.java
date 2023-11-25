@@ -32,6 +32,9 @@ public class ReservationMainFrame extends JFrame{
     private Map<Seat, JButton> seatButtonMap,seatJButtonMapReserved;
     private int countReservedClick;
 
+    private Theater testTheater;
+    private MovieInfo m;
+
 
     public ReservationMainFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,11 +47,14 @@ public class ReservationMainFrame extends JFrame{
 
     public void createUIComponents() {
         //แก้ข้อมูลหนัง
-        Theater testTheater = new Theater1(new Movie1());
-        MovieInfo m = (MovieInfo) testTheater.getMovieInfo();
+        testTheater = new Theater1(new Movie1());
+        m = (MovieInfo) testTheater.getMovieInfo();
 
         rowOne = testTheater.getRow();
         columnOne = testTheater.getColumn();
+
+        //test
+        testTheater.getDataTheater().printAll();
 
         //ข้อมูลเก้าอี้ที่กดคลิกไว้
         allChooseSeat = new ArrayList<>();
@@ -184,7 +190,7 @@ public class ReservationMainFrame extends JFrame{
         JLabel smallImageLabel = new JLabel(scaledIcon);
         jTop_JP2.add(smallImageLabel);
 
-        // สร้าง JLabel สำหรับข้อความ BorBorAndTheGang
+        // สร้าง JLabel สำหรับข้อความชื่อหนัง
         JLabel textLabel = new JLabel(m.getMovieName());
         textLabel.setFont(new Font("Arial", Font.BOLD,14));
         Font originalFont = textLabel.getFont();
@@ -219,7 +225,7 @@ public class ReservationMainFrame extends JFrame{
 
         JPanel A2 = new JPanel();
         A2.setOpaque(false);
-        // สร้าง ImageIcon สำหรับรูปภาพนาริกา
+        // สร้าง ImageIcon สำหรับรูปภาพนาฬิกา
         ImageIcon newIcon = new ImageIcon("src/picture/Clock.png");
         Image newImage = newIcon.getImage();
         int newWidth = 30;
@@ -366,11 +372,17 @@ public class ReservationMainFrame extends JFrame{
 
                         key.setReserveStatus(true);
 
+                        //testTheater.getDataTheater().printAll();
+
                         seatJButtonMapReserved.put(key,value);
 
                         ImageIcon reservedSeatIcon = new ImageIcon(key.getReserved_pathPicture());
                         value.setIcon(reservedSeatIcon);
                     }
+                    //check
+                    checkDoubleHash();
+                    System.out.println('\n');
+
                     seatButtonMap.clear();
                     allChooseSeat.clear();
 
@@ -385,6 +397,9 @@ public class ReservationMainFrame extends JFrame{
                         JButton value = entry.getValue();
 
                         key.setReserveStatus(false);
+                        //check
+                        checkDoubleHash();
+                        System.out.println('\n');
 
                         seatJButtonMapReserved.remove(key);
                         seatButtonMap.clear();
@@ -591,6 +606,19 @@ public class ReservationMainFrame extends JFrame{
         //System.out.println(allSeatCode);
         textLabel9.setText(allSeatCode);
         return allSeatCode;
+    }
+
+    private void checkDoubleHash(){
+        //ไว้เช็คข้อมูลใน doublehashmap
+        DoubleHashingHashMap<Integer, Seat> testData = testTheater.getDataTheater();
+        for (Map.Entry<Integer, Seat> entry : testData.getAllEntries()) {
+            Integer key = entry.getKey();
+            Seat value = entry.getValue();
+
+            // ในที่นี้, ใช้ getRow() และ getColumn() ตัวอย่างเพื่อแสดงผลข้อมูลของ Seat
+            System.out.print("("+"Key: " + key + ", Value: " + value.getStatus()+")"+" , ");
+        }
+
     }
 
 

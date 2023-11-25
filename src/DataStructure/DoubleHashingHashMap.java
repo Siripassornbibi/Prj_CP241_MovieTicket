@@ -1,5 +1,10 @@
 package DataStructure;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class DoubleHashingHashMap<K, V> {
     private static final int DEFAULT_CAPACITY = 17;
     private static final double LOAD_FACTOR = 0.75;
@@ -73,7 +78,7 @@ public class DoubleHashingHashMap<K, V> {
     //hash function
     private int hash1(K key) {
         return key.hashCode() % capacity;
-    }
+    } //ถ้าเป็นตัวเลข hash ออกมาก็เป็ฯตัวเลขอยู่ดี
 
     private int hash2(K key) {
         // Use a different prime number for hash2 to avoid clustering
@@ -141,6 +146,38 @@ public class DoubleHashingHashMap<K, V> {
 
         // หากไม่พบ key ในตาราง hash
         throw new IllegalArgumentException("Key not found: " + key);
+    }
+
+    public void printAll() {
+        for (Entry<K, V> entry : table) {
+            if (entry != null) {
+                System.out.print("Key: " + entry.getKey() + ", Value: " + entry.getValue() +",");
+            }
+        }
+    }
+
+    public List<V> getAllValues() {
+        List<V> values = new ArrayList<>();
+
+        for (Entry<K, V> entry : table) {
+            if (entry != null) {
+                values.add(entry.getValue());
+            }
+        }
+
+        return values;
+    }
+
+    public List<Map.Entry<K, V>> getAllEntries() {
+        List<Map.Entry<K, V>> entries = new ArrayList<>();
+
+        for (Entry<K, V> entry : table) {
+            if (entry != null) {
+                entries.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+            }
+        }
+
+        return entries;
     }
 }
 
