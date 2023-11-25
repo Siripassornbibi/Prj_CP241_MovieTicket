@@ -15,7 +15,7 @@ public class Theater1 extends Theater{
 
             //Set size of the Theater
             setRow(5);
-            setColumn(10);
+            setColumn(11);
 
             DataSeat = new DoubleHashingHashMap<>();
             //type seat

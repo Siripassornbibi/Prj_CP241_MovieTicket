@@ -47,7 +47,7 @@ public class Test {
         ImageIcon pickChairIcon = new ImageIcon("src/picture/PickChair.png");
         Image pickChairImage = pickChairIcon.getImage();
 
-        ImageIcon reservedSeatIcon = new ImageIcon("src/picture/ReservedPurpleSeat.png");
+        ImageIcon reservedSeatIcon = new ImageIcon("src/picture/CheckedPurpleSeat.png");
         Image reservedSeatImage = reservedSeatIcon.getImage();
 
         ImageIcon currentIcon = (ImageIcon) button.getIcon();

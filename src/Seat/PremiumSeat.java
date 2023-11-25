@@ -9,7 +9,8 @@ public class PremiumSeat extends Seat{
     public PremiumSeat(int seatNumber) {
         super(seatNumber);
         setPathPicture("src/picture/PurpleChair.png");
-        setClicked_pathPicture("src/picture/ReservedPurpleSeat.png");
+        setClicked_pathPicture("src/picture/CheckedPurpleSeat.png");
+        setReserved_pathPicture("src/picture/ReservedPurpleChair.png");
         setType("Premium");
         setPrice(200);
     }

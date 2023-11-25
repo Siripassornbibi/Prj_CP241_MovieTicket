@@ -60,6 +60,8 @@ public class ReservationMainFrame extends JFrame{
         JPanelStart.setLayout(new GridLayout(3, 1));
 
         cinemaName = new JLabel("Srinakharinwirot Cinema");
+        cinemaName.setFont(new Font("Arial", Font.BOLD, 20));
+        cinemaName.setBorder(new EmptyBorder(3, 0, 3, 0));
         cinemaName.setHorizontalAlignment(JLabel.CENTER);
         cinemaName.setVerticalAlignment(JLabel.CENTER);
         cinemaName.setForeground(Color.PINK);
@@ -78,6 +80,7 @@ public class ReservationMainFrame extends JFrame{
         JPanelStart.add(menu);
 
         cineplexLabel = new JLabel(testTheater.getTheaterName());
+        cineplexLabel .setFont(new Font("Times New Roman", Font.BOLD, 18));
         cineplexLabel.setHorizontalAlignment(JLabel.CENTER);
         cineplexLabel.setVerticalAlignment(JLabel.CENTER);
         cineplexLabel.setForeground(Color.PINK);
@@ -172,6 +175,7 @@ public class ReservationMainFrame extends JFrame{
 
         // สร้าง JLabel สำหรับข้อความ BorBorAndTheGang
         JLabel textLabel = new JLabel(m.getMovieName());
+        textLabel.setFont(new Font("Arial", Font.BOLD,14));
         Font originalFont = textLabel.getFont();
         int newSize = 16;
         Font newFont = originalFont.deriveFont((float) newSize);
@@ -246,6 +250,7 @@ public class ReservationMainFrame extends JFrame{
 
         //เพิ่ม text showtime
         JLabel textLabel3 = new JLabel("ShowTime");
+        textLabel3.setFont(new Font("Arial", Font.BOLD,14));
         textLabel3.setVerticalAlignment(JLabel.TOP);
         textLabel3.setHorizontalAlignment(JLabel.LEFT);
         jMiddle_JP2.add(textLabel3);
@@ -255,6 +260,7 @@ public class ReservationMainFrame extends JFrame{
         B1.setLayout(new GridLayout(2, 1));
         //เพิ่ม text swu
         JLabel textLabel4 = new JLabel("Srinakharinwirot Cinema");
+
         textLabel4.setVerticalAlignment(JLabel.TOP);
         textLabel4.setHorizontalAlignment(JLabel.LEFT);
         B1.add(textLabel4);
@@ -294,12 +300,14 @@ public class ReservationMainFrame extends JFrame{
 
         //เพิ่ม text ที่นั่ง
         JLabel textLabel7 = new JLabel("SEAT: ");
+        textLabel7.setFont(new Font("Arial", Font.BOLD,14));
         textLabel7.setVerticalAlignment(JLabel.TOP);
         textLabel7.setHorizontalAlignment(JLabel.LEFT);
         B3.add(textLabel7);
 
         //เพิ่ม text ราคา
         JLabel textLabel8 = new JLabel("TOTAL PRICE");
+        textLabel8.setFont(new Font("Arial", Font.BOLD,14));
         textLabel8.setVerticalAlignment(JLabel.TOP);
         textLabel8.setHorizontalAlignment(JLabel.LEFT);
         B3.add(textLabel8);
@@ -307,7 +315,7 @@ public class ReservationMainFrame extends JFrame{
         //เพิ่ม text เลขที่นั่ง
         textLabel9 = new JLabel("");
         Font originalFont9 = textLabel9.getFont();
-        int newSize9 = 16;
+        int newSize9 = 14;
         Font newFont9 = originalFont9.deriveFont((float) newSize9);
         textLabel9.setFont(newFont9);
         textLabel9.setVerticalAlignment(JLabel.TOP);
@@ -359,6 +367,7 @@ public class ReservationMainFrame extends JFrame{
             one.setOpaque(false);
 
             JLabel rowAlphabet = new JLabel(Character.toString(currentChar));
+            rowAlphabet.setFont(new Font("Arial", Font.BOLD,13));
             one.add(rowAlphabet);
 
             for (int j = 1; j <= column; j++) {
