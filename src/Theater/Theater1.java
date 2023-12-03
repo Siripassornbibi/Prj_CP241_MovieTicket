@@ -14,13 +14,12 @@ public class Theater1 extends Theater{
             setTheater_Name("Theatre1");
 
             //Set size of the Theater
-            setRow(6);
+            setRow(5);
             setColumn(11);
 
             DataSeat = new DoubleHashingHashMap<>();
             //type seat
-            String[] allSeatType = {"StandardSeat 1234","PremiumSeat 56"};
-            setTheater(allSeatType);
+            setAllSeatType(new String[]{"StandardSeat 1234","PremiumSeat 5"});
             //System.out.print(DataSeat);
         } else {
             // จัดการกรณีที่ movieInfo เป็น null

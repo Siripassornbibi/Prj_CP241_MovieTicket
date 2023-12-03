@@ -1,5 +1,7 @@
 package Seat;
 
+import java.io.Serializable;
+
 public class StandardSeat extends Seat{
 
     public void Seat(int seatNumber){

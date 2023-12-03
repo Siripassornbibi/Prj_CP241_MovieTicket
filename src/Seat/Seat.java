@@ -1,6 +1,8 @@
 package Seat;
 
-public class Seat{
+import java.io.Serializable;
+
+public class Seat implements Serializable {
     private int seatNumber;
     private double price;
     private String type;

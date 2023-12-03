@@ -36,7 +36,8 @@ public class ReservationMainFrame extends JFrame{
     private MovieInfo m;
 
 
-    public ReservationMainFrame() {
+    public ReservationMainFrame(Theater testTheater) {
+        this.testTheater = testTheater;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);  // ตั้งตำแหน่งให้ตรงกลาง
         getContentPane().setLayout(new BorderLayout(0, 0));
@@ -47,7 +48,6 @@ public class ReservationMainFrame extends JFrame{
 
     public void createUIComponents() {
         //แก้ข้อมูลหนัง
-        testTheater = new Theater1(new Movie1());
         m = (MovieInfo) testTheater.getMovieInfo();
 
         rowOne = testTheater.getRow();
@@ -65,6 +65,10 @@ public class ReservationMainFrame extends JFrame{
         //เลือกลบได้ทีละ 1 ตัว
         countReservedClick = 0;
 
+        //******************************************************
+        //                      ส่วน GUI
+        //******************************************************
+
         // TODO: place custom component creation code here
         setTitle("Movie Reservation");
         setSize(1250, 1000);
@@ -74,6 +78,7 @@ public class ReservationMainFrame extends JFrame{
         getContentPane().setBackground(Color.PINK);
 
         //JPanelStart
+        //******************************************************
         JPanelStart = new JPanel();
         JPanelStart.setBackground(new Color(0x3C3F41));
         JPanelStart.setLayout(new GridLayout(3, 1));
@@ -108,16 +113,15 @@ public class ReservationMainFrame extends JFrame{
         getContentPane().add(JPanelStart, BorderLayout.PAGE_START);
 
 
-
-
         //JPanelCenter
+        //******************************************************
         JPanelCenter = new JPanel();
         JPanelCenter.setBackground(new Color(0xFCFBE7));
         getContentPane().add(JPanelCenter, BorderLayout.CENTER);
         JPanelCenter.setLayout(new FlowLayout());
 
-
-
+        //ส่วนตรงกลางซ้าย
+        //******************************************************
         //JPanel 1
         JPanel1 = new JPanel();//ส่วนตรงกลางซ้าย
 //        JPanel1.setBackground(Color.white);
@@ -159,9 +163,8 @@ public class ReservationMainFrame extends JFrame{
 
         JPanel1.add(seatPrice_Box);
 
-
-
-
+        //ส่วนตรงกลางขวา
+        //******************************************************
         JPanel2 = new JPanel();//ส่วนด้านขวา
         JPanel2.setBackground(new Color((0xFFC9D1)));
         JPanel2.setBorder(new RoundBorder(30)); // ขอบมน
@@ -386,7 +389,7 @@ public class ReservationMainFrame extends JFrame{
                     seatButtonMap.clear();
                     allChooseSeat.clear();
 
-                    getTotal(seatButtonMap);
+                    calculateTotal(seatButtonMap);
                     getSeatCode(allChooseSeat);
 
                     reserveBtn.setText("SELECT SEAT");
@@ -405,7 +408,7 @@ public class ReservationMainFrame extends JFrame{
                         seatButtonMap.clear();
                         allChooseSeat.clear();
 
-                        getTotal(seatButtonMap);
+                        calculateTotal(seatButtonMap);
                         getSeatCode(allChooseSeat);
 
                         ImageIcon SeatIcon = new ImageIcon(key.getPathPicture());
@@ -428,8 +431,8 @@ public class ReservationMainFrame extends JFrame{
         JPanelCenter.add(JPanel2);
         JPanelCenter.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-
         //JPanelEnd
+        //******************************************************
         JPanelEnd = new JPanel();
         JPanelEnd.setBackground(new Color(0x3C3F41));
         getContentPane().add(JPanelEnd, BorderLayout.PAGE_END);
@@ -441,6 +444,8 @@ public class ReservationMainFrame extends JFrame{
         setVisible(true);
     }
 
+
+    //วางเก้าอี้ทั้งหมดทุกแถว
     public void addRowWithLabel(int currentRow,int column, char currentChar,Theater theater) {
         //key เริ่มต้นที่ 1
         DoubleHashingHashMap data = theater.getDataTheater();
@@ -456,18 +461,7 @@ public class ReservationMainFrame extends JFrame{
                 Seat s = (Seat) data.get((Math.abs( currentRow - theater.getRow() ) * column ) + j);
                 //System.out.println(s.getSeatNumber());
 
-                if (s.getStatus()) {
-                    ImageIcon imageIcon = new ImageIcon(s.getReserved_pathPicture());
-                    Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
-                    imageIcon = new ImageIcon(image);
-                    JButton btnSeat = new JButton(imageIcon);
-                    btnSeat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-
-                    one.add(btnSeat);
-                } else {
-                    one.add(addSeat(s));
-                }
-
+                one.add(addSeat(s));
             }
 
 
@@ -478,10 +472,18 @@ public class ReservationMainFrame extends JFrame{
         }
     }
 
+    //วางเก้าอี้แต่ละแบบ
     private JButton addSeat(Seat seat){
-        ImageIcon imageIcon = new ImageIcon(seat.getPathPicture());
-        Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(image);
+        ImageIcon imageIcon;
+        if(seat.getStatus()){
+            imageIcon = new ImageIcon(seat.getReserved_pathPicture());
+            Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+            imageIcon = new ImageIcon(image);
+        }else{
+            imageIcon = new ImageIcon(seat.getPathPicture());
+            Image image = imageIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+            imageIcon = new ImageIcon(image);
+        }
         JButton btnSeat = new JButton("");
         btnSeat.setIcon(imageIcon);
         btnSeat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -498,6 +500,7 @@ public class ReservationMainFrame extends JFrame{
         return btnSeat;
     }
 
+    //การกดปุ่มสับเก้าอี้
     private void toggleImage(JButton button,Seat seat) {
         //ภาพเก้าอี้ถูกคลิก
         ImageIcon ChairIcon = new ImageIcon(seat.getClicked_pathPicture());
@@ -521,10 +524,10 @@ public class ReservationMainFrame extends JFrame{
             allChooseSeat.remove(seat);
             seatButtonMap.remove(seat);
 
-            getTotal(seatButtonMap);
+            calculateTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
 
-        } else if (currentImage.equals(reservedSeatImage) && countReservedClick == 0) {
+        } else if (seat.getStatus() && countReservedClick == 0) {
             //รีเซ็ตใหม่ + เก้าอี้ที่จะลบ ลบได้ทีละตัว
 
             //ใช้รีเซ็ตพวกเก้าอี้ยังไม่จองที่เลือก
@@ -540,12 +543,12 @@ public class ReservationMainFrame extends JFrame{
             allChooseSeat.add(seat);
             seatButtonMap.put(seat,button);
 
-            getTotal(seatButtonMap);
+            calculateTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
 
             countReservedClick++;
 
-        } else if (currentImage.equals(reservedSeatImage) && countReservedClick > 0) {
+        } else if (seat.getStatus() && countReservedClick > 0) {
             seatButtonMap.clear();
             allChooseSeat.clear();
 
@@ -554,7 +557,7 @@ public class ReservationMainFrame extends JFrame{
             allChooseSeat.add(seat);
             seatButtonMap.put(seat,button);
 
-            getTotal(seatButtonMap);
+            calculateTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
 
             countReservedClick++;
@@ -569,7 +572,7 @@ public class ReservationMainFrame extends JFrame{
             allChooseSeat.add(seat);
             seatButtonMap.put(seat,button);
 
-            getTotal(seatButtonMap);
+            calculateTotal(seatButtonMap);
             getSeatCode(allChooseSeat);
 
             reserveBtn.setText("RESERVE");
@@ -581,7 +584,8 @@ public class ReservationMainFrame extends JFrame{
         }
     }
 
-    private double getTotal(Map<Seat, JButton> inputHashMap){
+    //คำนวณราคารวม
+    private double calculateTotal(Map<Seat, JButton> inputHashMap){
         double sum = 0;
         for (Seat s : seatButtonMap.keySet()){
             sum += s.getPrice();
@@ -591,6 +595,7 @@ public class ReservationMainFrame extends JFrame{
         return sum;
     }
 
+    //ที่นั่งที่กดเลือกทั้งหมด
     private String getSeatCode(ArrayList<Seat> selectedArrayList_Seat){
         String allSeatCode = new String("");
 
@@ -621,11 +626,12 @@ public class ReservationMainFrame extends JFrame{
 
     }
 
+    public void setTheater(Theater theater){
+        this.testTheater = theater;
+    }
 
-
-
-
-
-
+    public Theater getTestTheater(Theater theater){
+        return this.testTheater;
+    }
 
 }

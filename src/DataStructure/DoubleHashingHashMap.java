@@ -1,11 +1,12 @@
 package DataStructure;
 
+import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DoubleHashingHashMap<K, V> {
+public class DoubleHashingHashMap<K, V> implements Serializable {
     private static final int DEFAULT_CAPACITY = 17;
     private static final double LOAD_FACTOR = 0.75;
 
@@ -107,7 +108,7 @@ public class DoubleHashingHashMap<K, V> {
         table = newTable;
     }
 
-    private static class Entry<K, V> {
+    private static class Entry<K, V> implements Serializable{
         private final K key;
         private V value;
 

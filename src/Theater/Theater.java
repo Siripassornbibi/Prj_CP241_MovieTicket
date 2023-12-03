@@ -5,26 +5,17 @@ import Movie.Movie1;
 import Movie.MovieInfo;
 import Seat.*;
 
+import java.io.*;
 import java.util.Map;
 
-public class Theater{
+public class Theater implements Serializable{
     private int row,column;
     private Object movieInfo;
     private String Theater_Name;
 
     DoubleHashingHashMap<Integer, Seat> DataSeat;
 
-    public Theater(){
-        //Set size of the Theater
-        setRow(5);
-        setColumn(10);
-
-        DataSeat = new DoubleHashingHashMap<>();
-        //type seat
-        String[] allSeatType = {"StandardSeat 12","PremiumSeat 345"};
-        setTheater(allSeatType);
-        //System.out.print(DataSeat);
-    }
+    String[] allSeatType;
 
     public Theater(Object movieInfo) {
         if (movieInfo != null) {
@@ -39,13 +30,15 @@ public class Theater{
 
             DataSeat = new DoubleHashingHashMap<>();
             //type seat
-            String[] allSeatType = {"StandardSeat 12","PremiumSeat 345"};
-            setTheater(allSeatType);
+            setAllSeatType(new String[]{"StandardSeat 12", "PremiumSeat 345"});
             //System.out.print(DataSeat);
         } else {
             // จัดการกรณีที่ movieInfo เป็น null
             System.out.println("Error: movieInfo is null");
         }
+    }
+
+    public Theater() {
     }
 
     //create detail of theater here
@@ -92,7 +85,29 @@ public class Theater{
         }
     }
 
+    // Serialize data to a file
+    public void saveDataTheater(){
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dataSeat.ser"))) {
+            oos.writeObject(DataSeat);
+            System.out.println("Data saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    // Deserialize data from a file
+    public void loadDataTheater(){
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("dataSeat.ser"))) {
+            DataSeat = (DoubleHashingHashMap<Integer, Seat>) ois.readObject();
+            System.out.println("DataSeat loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Failed to load DataSeat. Initializing a new one.");
+            e.printStackTrace();
+            DataSeat = new DoubleHashingHashMap<>();
+            // เพิ่มโค้ดเพื่อกำหนดค่าเริ่มต้นหรือปรับปรุงตามความเหมาะสม
+            setTheater(allSeatType);
+        }
+    }
 
     //mutator
     public void setRow(int row) {
@@ -109,6 +124,10 @@ public class Theater{
 
     public void setTheater_Name(String theaterName){
         this.Theater_Name = theaterName;
+    }
+
+    public void setAllSeatType(String allSeatType[]){
+        this.allSeatType = allSeatType;
     }
 
     //accessor
@@ -152,6 +171,7 @@ public class Theater{
         getCurrentDataSeat(numSeat).setReserveStatus(false);
     }
 
+    //แสดงผล status การจองของที่นั่งทั้งหมด
     public void printAllStatus(){
         for (Map.Entry<Integer, Seat> entry : DataSeat.getAllEntries()) {
             Integer key = entry.getKey();

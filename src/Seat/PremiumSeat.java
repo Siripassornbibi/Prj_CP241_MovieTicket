@@ -2,6 +2,8 @@ package Seat;
 
 import Movie.Movie1;
 
+import java.io.Serializable;
+
 public class PremiumSeat extends Seat{
     public void Seat(int seatNumber){
         PremiumSeat s =new PremiumSeat(seatNumber);
