@@ -108,6 +108,11 @@ public class DoubleHashingHashMap<K, V> implements Serializable {
         table = newTable;
     }
 
+    public void clear() {
+        size = 0;
+        table = new Entry[capacity];
+    }
+
     private static class Entry<K, V> implements Serializable{
         private final K key;
         private V value;

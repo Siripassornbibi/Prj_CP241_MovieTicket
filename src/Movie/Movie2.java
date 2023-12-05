@@ -2,7 +2,7 @@ package Movie;
 
 public class Movie2 extends MovieInfo{
     public void MovieInfo(){
-        Movie2 m =new Movie2();
+        Movie2 m = new Movie2();
     }
     public Movie2(){
         setMovieName("Simpsons");

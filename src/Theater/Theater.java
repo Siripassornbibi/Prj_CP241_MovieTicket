@@ -17,6 +17,17 @@ public class Theater implements Serializable{
 
     String[] allSeatType;
 
+    public Theater() {
+        //Set size of the Theater
+        setRow(5);
+        setColumn(10);
+
+        DataSeat = new DoubleHashingHashMap<>();
+        //type seat
+        setAllSeatType(new String[]{"StandardSeat 12", "PremiumSeat 345"});
+        //System.out.print(DataSeat);
+    }
+
     public Theater(Object movieInfo) {
         if (movieInfo != null) {
             //Set Theater name
@@ -38,19 +49,10 @@ public class Theater implements Serializable{
         }
     }
 
-    public Theater() {
-        //Set size of the Theater
-        setRow(5);
-        setColumn(10);
-
-        DataSeat = new DoubleHashingHashMap<>();
-        //type seat
-        setAllSeatType(new String[]{"StandardSeat 12", "PremiumSeat 345"});
-        //System.out.print(DataSeat);
-    }
-
     //create detail of theater here
     public void setTheater(String allSeatType[]){
+        DataSeat.clear();
+
         int start;
         char lastCurrentChar = (char) ('A' + (this.getRow()-1));
 
@@ -93,6 +95,20 @@ public class Theater implements Serializable{
         }
     }
 
+    public void deleteFile(){
+        String filePath = "dataSeat.ser";
+
+        // สร้างอ็อบเจ็กต์ของคลาส File ด้วยตำแหน่งของไฟล์
+        File file = new File(filePath);
+
+        // ลบไฟล์
+        if (file.delete()) {
+            System.out.println("File is deleted");
+        } else {
+            System.out.println("Deletion is error");
+        }
+    }
+
     // Serialize data to a file
     public void saveDataTheater(){
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dataSeat.ser"))) {
@@ -109,8 +125,8 @@ public class Theater implements Serializable{
             DataSeat = (DoubleHashingHashMap<Integer, Seat>) ois.readObject();
             System.out.println("DataSeat loaded successfully.");
             if(DataSeat.size() != (row * column)){
+                //System.out.println(DataSeat.size());
                 setTheater(allSeatType);
-                saveDataTheater();
                 System.out.println("Save as DataSeat.");
             }
         } catch (IOException | ClassNotFoundException e) {
