@@ -39,6 +39,14 @@ public class Theater implements Serializable{
     }
 
     public Theater() {
+        //Set size of the Theater
+        setRow(5);
+        setColumn(10);
+
+        DataSeat = new DoubleHashingHashMap<>();
+        //type seat
+        setAllSeatType(new String[]{"StandardSeat 12", "PremiumSeat 345"});
+        //System.out.print(DataSeat);
     }
 
     //create detail of theater here
@@ -100,6 +108,11 @@ public class Theater implements Serializable{
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("dataSeat.ser"))) {
             DataSeat = (DoubleHashingHashMap<Integer, Seat>) ois.readObject();
             System.out.println("DataSeat loaded successfully.");
+            if(DataSeat.size() != (row * column)){
+                setTheater(allSeatType);
+                saveDataTheater();
+                System.out.println("Save as DataSeat.");
+            }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Failed to load DataSeat. Initializing a new one.");
             e.printStackTrace();
